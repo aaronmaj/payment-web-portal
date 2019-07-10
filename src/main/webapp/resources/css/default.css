@@ -1,0 +1,75 @@
+.ui-widget {
+    font-size: 70% !important;
+    text-align: left;
+}
+
+.ui-datatable-hor-scroll .ui-datatable-tablewrapper, .scrolling-div .ui-datatable-tablewrapper {
+    overflow: auto;
+    width: 100%;
+    padding-bottom: 5px;
+}
+.ui-widget .ui-widget {
+    font-size: 1em;
+}
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 0.85em !important;
+    font-weight: 600;
+}
+
+.ui-widget label {
+    font-weight: 500; /* some components use label (e.g checkbox) and we don't want them to be bold, only output labels */
+}
+.ui-widget .ui-outputlabel {
+    font-weight: 600;
+}
+.ui-widget .ui-outputlabel{
+    font-size: 1em !important;
+    /*color: blue;*/
+}
+.ui-outputlabel-rfi  {
+    font-size: 1em !important;
+}
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield {
+    line-height: 1.0; /*sets inputs height to 32px
+    font-size: 1em !important;*/
+}
+.ui-selectonemenu-label {
+    padding-left: 6px;
+}
+.ui-widget .ui-selectonemenu {
+    font-size: 1em !important;
+}
+.ui-selectonemenu-list,
+.ui-selectonemenu-panel
+{
+    font-family: 'Sofia Pro','Segoe UI', Arial, sans-serif;
+    font-size: 0.85em !important;
+
+}
+.ui-selectonemenu-items-wrapper
+{
+    height:100% !important
+}
+.ui-selectonemenu-item {
+    font-size: 1em !important;
+}
+.ui-selectonemenu-items-wrapper {
+    min-height: 100px !important;
+}
+.ui-datatable thead th {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.ui-datatable table {
+    font-family: 'Sofia Pro','Segoe UI', Arial, sans-serif;
+    font-weight: 600;
+    font-size: 0.9em !important;
+    table-layout:auto !important;
+    width:100% !important;
+}
+

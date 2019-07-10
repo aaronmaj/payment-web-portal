@@ -1,0 +1,245 @@
+<!DOCTYPE html  [
+        <!ENTITY nbsp "&#160;">
+        ]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+    <f:viewParam name="id" value="#{paymentBean.id}"/>
+    <f:event type="preRenderView" listener="#{paymentBean.retrieve()}"/>
+    <f:event type="preRenderView" listener="#{userBean.grantPermission}"/>
+</f:metadata>
+<h:head>
+    <title>Payment details</title>
+    <link rel="shortcut icon" type="image/x-icon" href="#{resource['img/favicon.png']}"/>
+    <!--h:outputStylesheet library="css" name="dashboard.css"/-->
+    <h:outputStylesheet library="css" name="default.css"/>
+    <h:outputStylesheet library="css" name="forums_styles.css"/>
+    <h:outputStylesheet library="css" name="dataTables.bulma.css"/>
+    <h:outputStylesheet library="css" name="dataTables.bulma.min.css"/>
+    <h:outputScript name="js/jquery-3.3.1.js"/>
+    <h:outputScript name="js/jquery-3.3.1.min.js"/>
+    <h:outputScript name="js/jquery.dataTables.min.js"/>
+    <h:outputScript name="js/dataTables.bulma.min.js"/>
+    <script type="text/javascript">
+        $(selector).DataTable();
+    </script>
+</h:head>
+
+<h:body>
+    <!--f:metadata>
+
+    </f:metadata-->
+    <p:growl id="growl"/>
+    <h:form>
+        <div class="forumsectionhdr">
+            <ul>
+                <h:panelGroup rendered="#{userBean.currentLogin.loginType == 'Administrator'}">
+                    <li><h:commandLink id="account"
+                                       action="#{channelService.showChannelAccount}"
+                                       style="text-transform: capitalize"
+                                       value="OBR Account"/>
+
+                    </li>
+
+                </h:panelGroup>
+                <h:panelGroup rendered="#{not empty user}">
+                    <li>&#160;&#160;|&#160;&#160; <h:commandLink id="profile"
+                                                                 action="#{userBean.showProfile}"
+                                                                 style="text-transform: capitalize"
+                                                                 value="Welcome ${userBean.currentLogin.username}"/>
+                        |&#160;&#160; <h:commandLink
+                                id="logout" value="Logout" action="#{userBean.logout}"/>
+                    </li>
+
+                </h:panelGroup>
+                <li>|&#160;&#160;<h:commandLink value="Home" action="index"/></li>
+
+            </ul>
+        </div>
+    </h:form>
+    <div class="forumscontainer" style="height: 20px">
+    </div>
+    <h:form>
+        <p:growl id="msgs" showDetail="true"/>
+        <p:panel id="researhPanel" header="Search" style="height: 20%">
+            <h:panelGrid>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="keyword" value="Key word:  &#160;"/>
+                    </p:column>
+                    <p:column>
+                        <h:inputText id="keyword" style="font-size: 1em; width: 150px"
+                                     title="Search by keyword: payer,customer name, mobile number"
+                                     value="#{treeBean.keyword}"
+                                     onkeypress="if (event.keyCode == 13) { this.onchange(); return false; }">
+                            <f:ajax event="change" listener="#{treeBean.listener}"/>
+                        </h:inputText>
+
+                        <p:tooltip id="toolTipPayer" for="keyword" showEvent="focus" hideEvent="blur"/>
+                        <p:watermark for="keyword" value="Search with a keyword" id="watermark"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="&#160;   &#160;"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Param :  &#160;"/>
+                        <h:selectOneMenu id="field" style="font-size: 1.1em;" value="#{treeBean.selectedItem}" converter="#{fieldConverter}"
+                                         valueChangeListener="#{treeBean.valueChange}">
+                            <f:selectItem itemValue="#{null}" itemLabel="Choose parameter"/>
+                            <f:selectItems value="#{detailService.fields}" var="detail"
+                                           itemValue="#{detail}" itemLabel="#{detail.description}"/>
+
+                            <p:ajax update="@form" listener="#{treeBean.selectedListener}"/>
+                        </h:selectOneMenu>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="&#160;   &#160;"/>
+                    </p:column>
+                    <p:column>
+                        <h:inputText id="detailkeyword" style="font-size: 1em; width: 150px"
+                                     title="Search by field: NIF,chassis number, document name,immatriculation number"
+                                     value="#{treeBean.detail}"
+                                     onkeypress="if (event.keyCode == 13) { this.onchange(); return false; }">
+                            <f:ajax event="change" listener="#{treeBean.detailListener}"/>
+                        </h:inputText>
+                        <p:tooltip id="toolTipdetail" for="keyword" showEvent="focus" hideEvent="blur"/>
+                        <p:watermark for="detailkeyword" value="Search by detail: NIF,numero chassis,document,..."
+                                     id="watermark1"/>
+                    </p:column>
+                    <p:outputLabel value="&#160;   &#160;"/>
+                    <p:column>
+                    </p:column>
+                    <p:column style="margin-left: 10px">
+                        <p:outputLabel for="start" value="&#160;  From:  "/>
+                    </p:column>
+                    <p:column>
+                        <p:calendar id="start" value="#{treeBean.startDate}" pattern="dd-MM-yyyy" mask="true"
+                                    mode="popup"
+                                    navigator="true" maxdate="#{treeBean.currentDate}">
+                            <p:ajax event="change" listener="#{treeBean.startClick}"/>
+                            <p:ajax event="dateSelect" listener="#{treeBean.onStartDateSelect}"/>
+                        </p:calendar>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel for="end" value="&#160;   To   :  &#160;"/>
+                        <p:calendar id="end" value="#{treeBean.endDate}" pattern="dd-MM-yyyy" mask="true"
+                                    navigator="true" mindate="#{treeBean.startDate}" maxdate="#{treeBean.currentDate}">
+                            <p:ajax event="valueChange" listener="#{treeBean.endClick}"/>
+                            <p:ajax event="dateSelect" listener="#{treeBean.onEndDateSelect}"/>
+                        </p:calendar>
+                    </p:column>
+                    <p:outputLabel value="&#160;   &#160;"/>
+                    <p:column>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Submit" update="@form" action="#{treeBean.submit}"
+                                         icon="pi pi-check" styleClass="search-button"/>
+                    </p:column>
+                    <p:outputLabel value="&#160;   &#160;"/>
+                    <p:column>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton value="Reset" update="@form" immediate="true" process="@this"
+                                         actionListener="#{treeBean.reset}">
+                            <p:resetInput target="@form"/>
+                        </p:commandButton>
+                    </p:column>
+                </p:row>
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+
+    <div class="forumscontainer" style="height: 20px">
+
+    </div>
+    <section style="width: 98%; align-content: center; margin-left: 5px">
+
+        <div style="width:15%; float:left;">
+            <h:form>
+                <p:treeTable value="#{treeBean.root}" var="node" dynamic="true"
+                             selectionMode="single" selection="#{treeBean.selectedNode}">
+                    <p:ajax event="collapse" listener="#{treeBean.onNodeCollapse}" update="@form"/>
+                    <p:ajax event="select"
+                            listener="#{treeBean.onNodeSelect}"/>
+                    <p:column headerText="Payments">
+                        <h:outputText value="#{node}"/>
+                    </p:column>
+                </p:treeTable>
+
+            </h:form>
+        </div>
+        <div style="width:84.5%; float:left;  margin-left:0.5%;">
+            <h:form>
+                <div class="forumtablestyle">
+                    <p:panel id="detailsPanel" header="Details for payment id :${paymentBean.payment.externalRefNo}">
+                        <h:panelGrid columnClasses="label,component,required" columns="3" styleClass="container">
+                            <h:outputLabel for="paymentAccount" value="Compte/Account: "/>
+                            <h:outputText id="paymentAccount"
+                                          value="#{paymentBean.payment.account.code}"/>
+                            <h:outputText/>
+                            <h:outputLabel for="accountName" value="Nom compte/Account name: "/>
+                            <h:outputText id="accountName"
+                                          value="#{paymentBean.payment.account.name}/#{paymentBean.payment.account.enName}"/>
+                            <h:outputText/>
+                            <h:outputLabel for="paymentBeanRefNo" value="Ref.No:"/>
+                            <h:outputText id="paymentBeanRefNo" value="#{paymentBean.payment.referenceNo}"/>
+                            <h:outputText/>
+                            <h:outputLabel for="paymentBeanDate" value="Date:"/>
+                            <h:outputText id="paymentBeanDate" value="#{paymentBean.payment.paymentDate}">
+                                <f:convertDateTime type="date" pattern="dd.MM.yyyy HH:mm:ss" timeZone="GMT+2"/>
+                            </h:outputText>
+                            <h:outputText/>
+                            <h:outputLabel for="paymentBeanPayer" value="Nom payeur/Payer name:"/>
+                            <h:outputText id="paymentBeanPayer" value="#{paymentBean.payment.payerName}"/>
+                            <h:outputText/>
+                            <h:outputLabel for="paymentBeanCustomer" value="Client/Customer:"/>
+                            <h:outputText id="paymentBeanCustomer" value="#{paymentBean.payment.customerName}"/>
+                            <h:outputText/>
+                            <h:outputLabel for="paymentBeanTelephone" value="Telephone:"/>
+                            <h:outputText id="paymentBeanTelephone" value="#{paymentBean.payment.msisdn}"/>
+                            <h:outputText/>
+                            <h:outputLabel for="paymentBeanAmount" value="Montant / Amount:"/>
+                            <h:outputText id="paymentBeanAmount" value="#{paymentBean.payment.amount}"/>
+                            <h:outputText/>
+                            <ui:repeat var="entry" value="#{paymentBean.payment.details}">
+                                <div class="forumtablestyle,rowline">#{entry.field.description} :</div>
+                                <br/>
+                            </ui:repeat>
+                            <ui:repeat var="entry1" value="#{paymentBean.payment.details}">
+                                <div class="forumtablestyle,rowline>">#{entry1.value} </div>
+                                <br/>
+                            </ui:repeat>
+
+                            <!--h:dataTable var="details" value="#{paymentBean.payment.details}">
+                                    <h:column headerText="">
+                                        <h:outputText value="${details.name} :" />
+                                    </h:column>
+                                    <h:column headerText="">
+                                        <h:outputText value="${details.value}" />
+                                    </h:column>
+                                </h:dataTable-->
+
+
+                        </h:panelGrid>
+
+                        <div class="buttons">
+                            <h:link value="View All" outcome="index" styleClass="btn btn-primary"/>
+                            |
+                            <h:link value="Print" outcome="index" includeViewParams="true"
+                                    styleClass="btn btn-primary"/>
+
+                        </div>
+                    </p:panel>
+                </div>
+            </h:form>
+        </div>
+        <div style="clear:both"/>
+    </section>
+</h:body>
+
+
+</html>

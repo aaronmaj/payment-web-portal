@@ -1,0 +1,102 @@
+POST /webservice_ecocash/ws_server_ecocash.php HTTP/1.0
+        Content-Type: text/xml; charset=utf-8
+        Accept: application/soap+xml, application/dime, multipart/related, text/*
+        User-Agent: Axis/1.4
+        Host: 10.102.246.71:8444
+        Cache-Control: no-cache
+        Pragma: no-cache
+        SOAPAction: "urn:server#CheckTinServer"
+        Content-Length: 525
+
+        <?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <ns1:CheckTin soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="urn:server">
+            <username xsi:type="xsd:string">xxxxx</username>
+            <password xsi:type="xsd:string">xxxxxx</password>
+            <tin xsi:type="xsd:string">4000287625</tin>
+        </ns1:CheckTin>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+
+        HTTP/1.1 200 OK
+        Date: Mon, 07 Jan 2019 12:37:05 GMT
+        Server: Apache/2.2.15 (CentOS)
+        X-Powered-By: PHP/5.3.3
+        X-SOAP-Server: NuSOAP/0.9.5 (1.123)
+        Content-Length: 519
+        Connection: close
+        Content-Type: text/xml; charset=ISO-8859-1
+
+        <?xml version="1.0" encoding="ISO-8859-1"?><SOAP-ENV:Envelope
+SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+<SOAP-ENV:Body>
+    <ns1:CheckTinResponse xmlns:ns1="urn:server">
+        <return xsi:type="xsd:string">555|Invalid TIN</return>
+    </ns1:CheckTinResponse>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?><account>
+<accountBalance>-38632</accountBalance>
+<accountNbr>534</accountNbr>
+<accountPlr>1</accountPlr>
+<active>true</active>
+<activite></activite>
+<adresse1>GATUNGURU</adresse1>
+<adresse2>75789155</adresse2>
+<adresse3></adresse3>
+<branch>
+    <branchCode>SIE</branchCode>
+    <branchName>AGENCE SIEGE</branchName>
+</branch>
+<chiffreControle>23</chiffreControle>
+<combinaisonSignataire1></combinaisonSignataire1>
+<combinaisonSignataire2></combinaisonSignataire2>
+<combinaisonSignataire3></combinaisonSignataire3>
+<communications>Fiche des engagements FPHU signÃ©e., Par PIA, Le 16/10/2018, Ã  17:10:17:83</communications>
+<cumulCredit>86036160</cumulCredit>
+<cumulDebit>86074792</cumulDebit>
+<lieuActivite>BUJUMBURA</lieuActivite>
+<nationalite>Burundaise</nationalite>
+<nbreFeminin>0</nbreFeminin>
+<nbreMasculin>0</nbreMasculin>
+<numeroRecuEnCours>0</numeroRecuEnCours>
+<numeroRecusEnCours>0</numeroRecusEnCours>
+<registreCommerce>1306/0131</registreCommerce>
+<sexe>FÃ©minin</sexe>
+<signataire1></signataire1>
+<signataire2></signataire2>
+<signataire3></signataire3>
+<signataire4></signataire4>
+<signataire5></signataire5>
+<title>KINUNDA REBECCA</title>
+<typeClient>
+    <calculFTC>true</calculFTC>
+    <calculIntCred>true</calculIntCred>
+    <calculIntDeb>true</calculIntDeb>
+    <codeType>30</codeType>
+    <intituleTypeClient>PARTICULIER</intituleTypeClient>
+    <intituleTypeDeClient>PARTICULIER</intituleTypeDeClient>
+    <racineComptable>1</racineComptable>
+</typeClient>
+<typeCompte>
+    <calculFTC>true</calculFTC>
+    <calculIntCred>false</calculIntCred>
+    <calculIntDeb>true</calculIntDeb>
+    <codeTypeCompte>11</codeTypeCompte>
+    <compteComptable>1</compteComptable>
+    <intitule>COMPTE COURANT</intitule>
+    <montantMinimumIntCred>0</montantMinimumIntCred>
+    <montantMinimumIntDeb>0</montantMinimumIntDeb>
+    <racineComptable>1</racineComptable>
+    <tauxIntCred>0.0</tauxIntCred>
+    <tauxIntDeb>3.0</tauxIntDeb>
+</typeCompte>
+<typeCtivite>SalariÃ©</typeCtivite>
+<VIP>false</VIP>
+</account>

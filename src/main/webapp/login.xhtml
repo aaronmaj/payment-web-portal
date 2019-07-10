@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<ui:composition>
+
+    <!-- This is the page that the user logs into. If the login process fails, the user is informed through an error -->
+
+
+    <h:head>
+        <!-- web font -->
+        <link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext"
+              rel="stylesheet"/>
+        <!-- //web font -->
+        <h:outputStylesheet name="css/forums_styles.css"/>
+        <h:outputStylesheet name="css/style.css"/>
+        <h:outputStylesheet name="css/font-awesome.css"/>
+        <title>Login</title>
+        <script type="text/javascript">
+            addEventListener("load", function () {
+                setTimeout(hideURLbar, 0);
+            }, false);
+
+            function hideURLbar() {
+                window.scrollTo(0, 1);
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <div class="main">
+            <p>
+
+                <h:form style="background-color: #f4f3f3;">
+                    <table width="100%"  border="0" cellpadding="0" cellspacing="0"
+                           class="forumtablestyle">
+
+                        <!-- Table header -->
+                        <tr class="header">
+                            <td class="forumheaderfirst"></td>
+
+                        </tr>
+                        <tr class="oddRow">
+                            <td>
+
+                                    <div align="center" class="main-w3lsrow">
+
+                                        <div class="forumtitletext">
+                                            <!--h4><strong>Login</strong></h4-->
+                                        </div>
+                                        <div class="clear"/>
+                                        <p:panel header="Login">
+                                        <div class="login-agileits-top">
+
+                                            <h4><strong><h:outputText value="Username: "
+                                                                      styleClass="forumtitletext"></h:outputText></strong>
+                                            </h4>
+
+                                            <h:inputText id="username"
+                                                         value="#{userBean.currentLogin.username}"
+                                                         styleClass="ui-outputlabel" style="text-align: center"/>
+                                            <h:message for="username" styleClass="alert-danger"/>
+                                            <br/>
+                                            <h4><strong><h:outputText value="Password: "
+                                                                      styleClass="forumtitletext"
+                                                                      style="text-align: center"/></strong></h4>
+                                            <h:inputSecret id="password"
+                                                           value="#{userBean.currentLogin.password}"
+                                                           styleClass="password-field" style="text-align: center"/>
+                                            <h:message for="password" styleClass="alert-danger"/>
+                                            <br/>
+                                            <br/>
+
+                                            <h:commandButton value="Login" action="#{userBean.validateLogin}"
+                                                             styleClass="buttonMed"/>
+
+                                        </div>
+                                        </p:panel>
+                                    </div>
+
+                            </td>
+                        </tr>
+                    </table>
+                </h:form>
+            </p>
+        </div>
+    </h:body>
+</ui:composition>
+
+</html>

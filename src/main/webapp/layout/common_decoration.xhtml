@@ -1,0 +1,20 @@
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://xmlns.jcp.org/jsf/html"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+     xmlns:f="http://xmlns.jcp.org/jsf/core"
+     class="forumscontainer">
+
+    <ui:composition>
+        <ui:define name="metadata">
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{userBean.grantPermission}"/>
+            </f:metadata>
+        </ui:define>
+        <h:body class="bodyStyle">
+            <div class="forumscontainer">
+                <ui:insert name="content"/>
+            </div>
+        </h:body>
+
+    </ui:composition>
+</div>
